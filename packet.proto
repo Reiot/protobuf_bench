@@ -17,7 +17,7 @@ message Error {
     }
     required Category category = 1;
     optional string message = 2;
-    optional int32 code = 3;
+    optional sint32 code = 3;
     optional string reserved = 4;
 }
 
