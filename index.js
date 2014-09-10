@@ -49,22 +49,20 @@ function run(itemCount) {
         account: {
             id: 123456789,
             userID: 'who@gmail.com',
+            // what: 'the hell'
         },
         accessToken: "12345678901234567890",
         items: items,
     };
 
-    var pbuf = new pb.LoginResponse({
-        id: json.id,
-        error: new pb.Error(json.error),
-        account: new pb.Account(json.account),
-        accessToken: json.accessToken,
-        items: items.map(function(item) { return new pb.Item(item); }),
-    });
+    var pbuf = new pb.LoginResponse(json);
 
     console.log('\n##', itemCount, 'items ##\n');
     console.log('JSON:', JSON.stringify(json).length, 'bytes');
-    console.log('protobuf:', pbuf.encodeNB().length, 'bytes\n');
+    console.log('ProtoBuf.js:', pbuf.encodeNB().length, 'bytes');
+    console.log('node-protobuf:', npb.serialize(json, "packet.LoginResponse").length, 'bytes');
+    console.log('protobuf:', LoginResponse.serialize(json).length, 'bytes');
+    console.log('protocol-buffers:', pb3.LoginResponse.encode(json).length, 'bytes');
 
     //
     var suite = new Benchmark.Suite();
